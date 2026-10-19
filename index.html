@@ -19,6 +19,20 @@
     .card-accent {
       border-top: 4px solid #059669;
     }
+
+    /* Correção para impressões e PDFs nítidos */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .header-bg {
+        background: #065f46 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
   </style>
 </head>
 <body class="p-2 md:p-6 text-slate-800">
@@ -32,16 +46,16 @@
         <!-- Logotipo Original Universal -->
         <div class="flex items-center gap-4">
           <div class="bg-white p-2.5 rounded-xl shadow-md border border-white/20 flex items-center justify-center shrink-0">
-            <!-- Imagem com link permanente para abrir em qualquer PC ou no Vercel -->
             <img src="LOGO-CPAM-2025.png" 
-     alt="Complexo Pediátrico Arlinda Marques" 
-     class="h-10 md:h-12 w-auto object-contain">
+                 onerror="this.onerror=null; this.src='LOGO-CPAM-20251.png';" 
+                 alt="Complexo Pediátrico Arlinda Marques" 
+                 class="h-10 md:h-12 w-auto object-contain">
           </div>
           <div>
             <div class="flex items-center gap-2 text-xs font-semibold text-emerald-200 uppercase tracking-widest">
               <span>Complexo Hospitalar</span> • <span>Ambulatório Especializado</span>
             </div>
-            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">GESTÃO À VISTA</h1>
+            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white">GESTÃO À VISTA</h1>
             <p class="text-sm font-medium text-emerald-100">Indicadores Operacionais e Assistenciais</p>
           </div>
         </div>
@@ -424,6 +438,7 @@
     }
 
     function renderizarGraficos(consultas, multis, exames, psf, encaixe) {
+      // Gráfico de Barras otimizado (sem animações demoradas)
       const ctxSubgroup = document.getElementById('subgroupChart').getContext('2d');
       if (meuGraficoBarra) {
         meuGraficoBarra.destroy();
@@ -441,11 +456,13 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          animation: false, // Gráfico renderiza instantaneamente
           plugins: { legend: { position: 'bottom' } },
           scales: { x: { stacked: false }, y: { beginAtZero: true } }
         }
       });
 
+      // Gráfico de Rosca otimizado (sem animações demoradas)
       const ctxOrigin = document.getElementById('originChart').getContext('2d');
       if (meuGraficoOrigem) {
         meuGraficoOrigem.destroy();
@@ -464,6 +481,7 @@
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          animation: false, // Renderização instantânea
           plugins: { legend: { position: 'bottom' } }
         }
       });
