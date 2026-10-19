@@ -14,7 +14,7 @@
       background-color: #f3f4f6;
     }
     
-    /* Verde mais fechado, elegante e institucional */
+    /* Verde elegante e institucional */
     .header-bg {
       background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%);
     }
@@ -45,27 +45,28 @@
     <header class="header-bg text-white p-4 md:p-6">
       <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
         
-        <!-- Logotipo e Hierarquia Ajustada -->
+        <!-- Logotipo Destacado e Textos 100% Brancos -->
         <div class="flex items-center gap-4">
-          <div class="flex items-center justify-center shrink-0">
+          <!-- Caixinha branca para dar destaque perfeito à marca com letras verdes -->
+          <div class="bg-white p-2.5 rounded-xl shadow-lg border border-white/20 flex items-center justify-center shrink-0">
             <img src="LOGO-CPAM-2025.png" 
                  onerror="this.onerror=null; this.src='LOGO-CPAM-20251.png';" 
                  alt="Complexo Pediátrico Arlinda Marques" 
-                 class="h-14 md:h-16 w-auto object-contain drop-shadow-md">
+                 class="h-12 md:h-14 w-auto object-contain">
           </div>
           <div class="flex flex-col">
-            <!-- 1. Linha Superior Menor -->
-            <span class="text-xs md:text-sm font-medium text-emerald-200 tracking-wide">
+            <!-- 1. Complexo... (BRANCO) -->
+            <span class="text-xs md:text-sm font-semibold text-white tracking-wide opacity-90">
               Complexo Pediátrico Arlinda Marques
             </span>
             
-            <!-- 2. GESTÃO A VISTA EM DESTAQUE, MAIOR E BRANCO -->
+            <!-- 2. GESTÃO À VISTA... (BRANCO, MAIOR E EM DESTAQUE) -->
             <h1 class="text-xl md:text-2xl font-extrabold text-white tracking-tight my-0.5 drop-shadow-sm">
               GESTÃO À VISTA - Ambulatório Especializado
             </h1>
             
-            <!-- 3. Linha Inferior Menor -->
-            <span class="text-xs md:text-sm font-medium text-emerald-200 tracking-wide">
+            <!-- 3. Indicadores... (BRANCO) -->
+            <span class="text-xs md:text-sm font-semibold text-white tracking-wide opacity-90">
               Indicadores Operacionais e Assistenciais
             </span>
           </div>
@@ -73,10 +74,10 @@
 
         <!-- Mês de Referência -->
         <div class="bg-white/15 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/20 flex items-center gap-3 shrink-0">
-          <i class="fa-regular fa-calendar-check text-xl text-emerald-200"></i>
+          <i class="fa-regular fa-calendar-check text-xl text-white"></i>
           <div>
-            <span class="text-xs text-emerald-200 block font-medium">Mês de Referência</span>
-            <span id="label-periodo" class="text-base font-bold tracking-wide">NOVEMBRO / 2026</span>
+            <span class="text-xs text-white/80 block font-medium">Mês de Referência</span>
+            <span id="label-periodo" class="text-base font-bold tracking-wide text-white">NOVEMBRO / 2026</span>
           </div>
         </div>
       </div>
