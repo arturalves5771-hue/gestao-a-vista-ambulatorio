@@ -13,12 +13,27 @@
       font-family: 'Inter', sans-serif;
       background-color: #f3f4f6;
     }
+    
+    /* Verde mais claro e uniforme sem degradê pesado */
     .header-bg {
-      background: linear-gradient(135deg, #065f46 0%, #047857 50%, #10b981 100%);
+      background-color: #0d9488; /* Verde/Teal mais claro e uniforme */
     }
+
+    /* Efeito de contorno fino preto e destaque nas letras do topo */
+    .texto-destaque-topo {
+      color: #ffffff;
+      text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000,
+         0px 2px 4px rgba(0,0,0,0.4);
+    }
+
     .card-accent {
       border-top: 4px solid #059669;
     }
+
     @media print {
       body {
         background-color: #ffffff !important;
@@ -26,7 +41,7 @@
         print-color-adjust: exact;
       }
       .header-bg {
-        background: #065f46 !important;
+        background-color: #0d9488 !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
@@ -41,7 +56,7 @@
     <header class="header-bg text-white p-4 md:p-6">
       <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
         
-        <!-- Logotipo Original Universal -->
+        <!-- Logotipo e Textos Solicitados -->
         <div class="flex items-center gap-4">
           <div class="bg-white p-2.5 rounded-xl shadow-md border border-white/20 flex items-center justify-center shrink-0">
             <img src="LOGO-CPAM-2025.png" 
@@ -49,20 +64,29 @@
                  alt="Complexo Pediátrico Arlinda Marques" 
                  class="h-10 md:h-12 w-auto object-contain">
           </div>
-          <div>
-            <div class="flex items-center gap-2 text-xs font-semibold text-emerald-200 uppercase tracking-widest">
-              <span>Complexo Pediátrico Arlinda Marques</span>
-            </div>
-            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white">GESTÃO À VISTA - AMBULTÓRIO DE ESPECIALIDADE</h1>
-            <p class="text-sm font-medium text-emerald-100">Indicadores Operacionais e Assistenciais</p>
+          <div class="flex flex-col">
+            <!-- 1. Complexo Pediátrico Arlinda Marques (MAIOR E BRANCO com contorno) -->
+            <span class="text-lg md:text-xl font-extrabold tracking-wide texto-destaque-topo">
+              COMPLEXO PEDIÁTRICO ARLINDA MARQUES
+            </span>
+            
+            <!-- 2. GESTÃO A VISTA - AMBULATÓRIO DE ESPECIALIDADE (MENOR) -->
+            <h1 class="text-sm md:text-base font-bold tracking-tight text-emerald-100 drop-shadow-sm my-0.5">
+              GESTÃO À VISTA - AMBULATÓRIO DE ESPECIALIDADE
+            </h1>
+            
+            <!-- 3. Indicadores Operacionais e Assistenciais (MAIOR E BRANCO com contorno) -->
+            <span class="text-base md:text-lg font-extrabold texto-destaque-topo">
+              Indicadores Operacionais e Assistenciais
+            </span>
           </div>
         </div>
 
         <!-- Mês de Referência -->
-        <div class="bg-white/15 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/20 flex items-center gap-3">
-          <i class="fa-regular fa-calendar-check text-xl text-emerald-200"></i>
+        <div class="bg-white/15 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/20 flex items-center gap-3 shrink-0">
+          <i class="fa-regular fa-calendar-check text-xl text-emerald-100"></i>
           <div>
-            <span class="text-xs text-emerald-200 block font-medium">Mês de Referência</span>
+            <span class="text-xs text-emerald-100 block font-medium">Mês de Referência</span>
             <span id="label-periodo" class="text-base font-bold tracking-wide">NOVEMBRO / 2026</span>
           </div>
         </div>
@@ -308,7 +332,6 @@
     let meuGraficoOrigem = null;
 
     function carregarDadosPlanilha() {
-      // Usando fetch direto sem proxy intermediário lento
       fetch(CSV_URL)
         .then(res => {
           if (!res.ok) throw new Error('Erro de rede');
@@ -319,12 +342,10 @@
         })
         .catch(err => {
           console.warn("Tentando com rota alternativa rápida...", err);
-          // Fallback ultra veloz via rota pública do Google Visualization se o fetch direto bloquear
           fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(CSV_URL))
             .then(res => res.text())
             .then(csvText => processarDados(csvText))
             .catch(() => {
-              // Dados padrão imediatos caso esteja offline
               aplicarDadosNaTela({
                 periodo: "novembro/2026", medicos: 45, especialidades: 31,
                 amb: { cons: 1250, multi: 135, exam: 335, total: 1720 },
@@ -399,7 +420,6 @@
       document.getElementById('kpi-taxa-psf').innerText = `${taxaPsf}%`;
       document.getElementById('kpi-taxa-encaixe').innerText = `${taxaEnc}%`;
 
-      // Ambulatório
       document.getElementById('badge-amb').innerText = `${d.amb.total.toLocaleString('pt-BR')} Agend.`;
       document.getElementById('amb-cons').innerText = d.amb.cons.toLocaleString('pt-BR');
       document.getElementById('bar-amb-cons').style.width = `${Math.min(100, Math.round((d.amb.cons / (d.amb.total || 1)) * 100))}%`;
@@ -410,7 +430,6 @@
       document.getElementById('amb-psf').innerText = d.psf;
       document.getElementById('amb-enc').innerText = d.encaixe;
 
-      // SRTN
       document.getElementById('badge-srtn').innerText = `${d.srtn.total.toLocaleString('pt-BR')} Agend.`;
       document.getElementById('srtn-cons').innerText = d.srtn.cons.toLocaleString('pt-BR');
       document.getElementById('bar-srtn-cons').style.width = `${Math.min(100, Math.round((d.srtn.cons / (d.srtn.total || 1)) * 100))}%`;
@@ -421,7 +440,6 @@
       document.getElementById('srtn-psf').innerText = d.psf;
       document.getElementById('srtn-enc').innerText = d.encaixe;
 
-      // AMVIVA
       document.getElementById('badge-amviva').innerText = `${d.amviva.total.toLocaleString('pt-BR')} Agend.`;
       document.getElementById('amviva-cons').innerText = d.amviva.cons.toLocaleString('pt-BR');
       document.getElementById('bar-amviva-cons').style.width = `${Math.min(100, Math.round((d.amviva.cons / (d.amviva.total || 1)) * 100))}%`;
