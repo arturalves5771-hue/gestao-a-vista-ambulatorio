@@ -87,7 +87,7 @@
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-4">
           
           <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 shadow-sm text-center">
-            <i class="fa-solid fa-users-between-lines text-emerald-600 text-xl mb-1"></i>
+            <i class="fa-solid fa-hospital-user text-emerald-600 text-xl mb-1"></i>
             <p id="kpi-total" class="text-2xl md:text-3xl font-extrabold text-slate-800">2.080</p>
             <p class="text-xs font-semibold text-slate-500 uppercase mt-1">Total de Atendimentos</p>
           </div>
@@ -129,7 +129,7 @@
               <h2 class="font-bold text-lg text-emerald-900 flex items-center gap-2">
                 <i class="fa-solid fa-hospital text-emerald-600"></i> Ambulatório
               </h2>
-              <span id="badge-amb" class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full">1.720 Atendimentos.</span>
+              <span id="badge-amb" class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full">1.720 Atendimentos</span>
             </div>
             
             <div class="space-y-3 my-4">
@@ -403,7 +403,7 @@
       document.getElementById('kpi-taxa-psf').innerText = `${taxaPsf}%`;
       document.getElementById('kpi-taxa-encaixe').innerText = `${taxaEnc}%`;
 
-      document.getElementById('badge-amb').innerText = `${d.amb.total.toLocaleString('pt-BR')} Atendimentos.`;
+      document.getElementById('badge-amb').innerText = `${d.amb.total.toLocaleString('pt-BR')} Atendimentos`;
       document.getElementById('amb-cons').innerText = d.amb.cons.toLocaleString('pt-BR');
       document.getElementById('bar-amb-cons').style.width = `${Math.min(100, Math.round((d.amb.cons / (d.amb.total || 1)) * 100))}%`;
       document.getElementById('amb-multi').innerText = d.amb.multi.toLocaleString('pt-BR');
@@ -427,9 +427,9 @@
       document.getElementById('amviva-cons').innerText = d.amviva.cons.toLocaleString('pt-BR');
       document.getElementById('bar-amviva-cons').style.width = `${Math.min(100, Math.round((d.amviva.cons / (d.amviva.total || 1)) * 100))}%`;
       document.getElementById('amviva-multi').innerText = d.amviva.multi.toLocaleString('pt-BR');
-      document.getElementById('bar-amb-multi').style.width = `${Math.min(100, Math.round((d.amviva.multi / (d.amviva.total || 1)) * 100))}%`;
+      document.getElementById('bar-amviva-multi').style.width = `${Math.min(100, Math.round((d.amviva.multi / (d.amviva.total || 1)) * 100))}%`;
       document.getElementById('amviva-exam').innerText = d.amviva.exam.toLocaleString('pt-BR');
-      document.getElementById('bar-amb-exam').style.width = `${Math.min(100, Math.round((d.amviva.exam / (d.amviva.total || 1)) * 100))}%`;
+      document.getElementById('bar-amviva-exam').style.width = `${Math.min(100, Math.round((d.amviva.exam / (d.amviva.total || 1)) * 100))}%`;
       document.getElementById('amviva-psf').innerText = d.psf;
       document.getElementById('amviva-enc').innerText = d.encaixe;
 
