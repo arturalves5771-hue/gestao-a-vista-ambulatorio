@@ -13,12 +13,16 @@
       font-family: 'Inter', sans-serif;
       background-color: #f3f4f6;
     }
+    
+    /* Verde mais fechado, elegante e institucional */
     .header-bg {
-      background: linear-gradient(135deg, #065f46 0%, #047857 50%, #10b981 100%);
+      background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%);
     }
+
     .card-accent {
       border-top: 4px solid #059669;
     }
+
     @media print {
       body {
         background-color: #ffffff !important;
@@ -26,7 +30,7 @@
         print-color-adjust: exact;
       }
       .header-bg {
-        background: #065f46 !important;
+        background: #064e3b !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
@@ -41,7 +45,7 @@
     <header class="header-bg text-white p-4 md:p-6">
       <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
         
-        <!-- Logotipo e Hierarquia Exata dos Títulos -->
+        <!-- Logotipo e Hierarquia Ajustada -->
         <div class="flex items-center gap-4">
           <div class="flex items-center justify-center shrink-0">
             <img src="LOGO-CPAM-2025.png" 
@@ -50,20 +54,20 @@
                  class="h-14 md:h-16 w-auto object-contain drop-shadow-md">
           </div>
           <div class="flex flex-col">
-            <!-- 1. Maior e Branco -->
-            <h2 class="text-base md:text-lg font-extrabold text-white tracking-wide">
+            <!-- 1. Linha Superior Menor -->
+            <span class="text-xs md:text-sm font-medium text-emerald-200 tracking-wide">
               Complexo Pediátrico Arlinda Marques
-            </h2>
+            </span>
             
-            <!-- 2. Menor em relação aos outros dois -->
-            <h1 class="text-xs md:text-sm font-semibold text-emerald-200 tracking-wider my-0.5">
-              GESTÃO A VISTA - Ambulatório Especializado
+            <!-- 2. GESTÃO A VISTA EM DESTAQUE, MAIOR E BRANCO -->
+            <h1 class="text-xl md:text-2xl font-extrabold text-white tracking-tight my-0.5 drop-shadow-sm">
+              GESTÃO À VISTA - Ambulatório Especializado
             </h1>
             
-            <!-- 3. Maior e Branco (Mesmo tamanho que o primeiro) -->
-            <h2 class="text-base md:text-lg font-extrabold text-white tracking-wide">
+            <!-- 3. Linha Inferior Menor -->
+            <span class="text-xs md:text-sm font-medium text-emerald-200 tracking-wide">
               Indicadores Operacionais e Assistenciais
-            </h2>
+            </span>
           </div>
         </div>
 
