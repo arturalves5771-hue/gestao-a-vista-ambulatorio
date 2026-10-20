@@ -44,7 +44,7 @@
     <header class="header-bg text-white p-4 md:p-6">
       <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
         
-        <!-- Logotipo Destacado e Textos 100% Brancos -->
+        <!-- Logotipo Destacado -->
         <div class="flex items-center gap-4">
           <div class="bg-white p-2.5 rounded-xl shadow-lg border border-white/20 flex items-center justify-center shrink-0">
             <img src="LOGO-CPAM-2025.png" 
@@ -70,7 +70,7 @@
           <i class="fa-regular fa-calendar-check text-xl text-white"></i>
           <div>
             <span class="text-xs text-white/80 block font-medium">Mês de Referência</span>
-            <span id="label-periodo" class="text-base font-bold tracking-wide text-white">NOVEMBRO / 2026</span>
+            <span id="label-periodo" class="text-base font-bold tracking-wide text-white">CARREGANDO...</span>
           </div>
         </div>
       </div>
@@ -78,7 +78,7 @@
 
     <div class="p-4 md:p-6 space-y-6">
 
-      <!-- BLOCOS DE RESUMO (KPIs SUPERIORES - COM PESO E MEDIDA) -->
+      <!-- BLOCOS DE RESUMO (KPIs SUPERIORES) -->
       <div>
         <div class="flex items-center gap-2 mb-3 text-emerald-800 font-bold uppercase text-xs tracking-wider">
           <i class="fa-solid fa-chart-line"></i>
@@ -170,7 +170,7 @@
           </div>
         </div>
 
-        <!-- GRUPO 2: SRTN (ROXO E BEBÊ) -->
+        <!-- GRUPO 2: SRTN -->
         <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 flex flex-col justify-between" style="border-top: 4px solid #9333ea;">
           <div>
             <div class="flex justify-between items-center border-b pb-2 mb-3">
@@ -212,7 +212,7 @@
           </div>
         </div>
 
-        <!-- GRUPO 3: AMVIVA (LARANJA ESCURO) -->
+        <!-- GRUPO 3: AMVIVA -->
         <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 flex flex-col justify-between" style="border-top: 4px solid #c2410c;">
           <div>
             <div class="flex justify-between items-center border-b pb-2 mb-3">
@@ -256,10 +256,10 @@
 
       </div>
 
-      <!-- SEÇÃO INFERIOR: GRÁFICOS + TOP 10 DE ESPECIALIDADES -->
+      <!-- SEÇÃO INFERIOR: GRÁFICOS + TOP 10 ESPECIALIDADES -->
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
         
-        <!-- Gráfico de Distribuição por Subgrupos (Ocupa 2 colunas) -->
+        <!-- Gráfico de Distribuição por Subgrupos -->
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm lg:col-span-2">
           <h3 class="font-bold text-slate-700 mb-4 flex items-center gap-2 text-sm uppercase tracking-wide">
             <i class="fa-solid fa-chart-column text-emerald-600"></i> Distribuição Operacional por Subgrupo
@@ -269,7 +269,7 @@
           </div>
         </div>
 
-        <!-- Gráfico de Origem do Atendimento (Ocupa 1 coluna) -->
+        <!-- Gráfico de Origem do Atendimento -->
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
           <h3 class="font-bold text-slate-700 mb-4 flex items-center gap-2 text-sm uppercase tracking-wide">
             <i class="fa-solid fa-chart-pie text-emerald-600"></i> Perfil de Origem (Regulação)
@@ -279,14 +279,14 @@
           </div>
         </div>
 
-        <!-- Top 10 de Especialidades (Ocupa 1 coluna) -->
+        <!-- TOP 10 ESPECIALIDADES -->
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
           <div>
             <h3 class="font-bold text-slate-700 mb-3 flex items-center gap-2 text-sm uppercase tracking-wide border-b pb-2">
               <i class="fa-solid fa-medal text-amber-500"></i> Top 10 Especialidades
             </h3>
             <div id="top-especialidades-lista" class="space-y-1.5 text-xs">
-              <!-- Preenchido automaticamente pelo JavaScript -->
+              <!-- Preenchido dinamicamente -->
             </div>
           </div>
           <div class="pt-3 border-t text-[10px] text-slate-400 text-center">
@@ -314,7 +314,7 @@
             <i class="fa-solid fa-check-circle text-emerald-600"></i> Pontualidade
           </span>
           <span class="bg-white text-emerald-800 border border-emerald-300 text-sm font-semibold px-3.5 py-2 rounded-lg text-center flex-1 md:flex-none">
-            <i class="fa-solid fa-check-circle text-emerald-600"></i> Transparency
+            <i class="fa-solid fa-check-circle text-emerald-600"></i> Transparência
           </span>
         </div>
       </div>
@@ -340,105 +340,76 @@
         .then(res => res.text())
         .then(csvText => processarDados(csvText))
         .catch(err => {
-          console.warn("Tentando proxy alternativo...", err);
+          console.warn("Tentando rota alternativa...", err);
           fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent(CSV_URL))
             .then(res => res.text())
             .then(csvText => processarDados(csvText))
-            .catch(e => console.error("Erro ao carregar CSV", e));
+            .catch(e => console.error("Erro ao carregar os dados CSV:", e));
         });
     }
 
     function processarDados(csvText) {
       const linhas = parseCSV(csvText);
 
-      // Valores padrão de segurança
-      let dados = {
-        periodo: "NOVEMBRO / 2026",
-        medicos: 45,
-        especialidades: 31,
-        pesoMedida: 150,
-        amb: { cons: 0, multi: 0, exam: 0, total: 0, psf: 0, enc: 0 },
-        srtn: { cons: 0, multi: 0, exam: 0, total: 0, psf: 0, enc: 0 },
-        amviva: { cons: 0, multi: 0, exam: 0, total: 0, psf: 0, enc: 0 },
-        topEspec: []
-      };
+      // Periodo (Linha 1, Coluna B)
+      const periodo = (linhas[0] && linhas[0][1]) ? linhas[0][1] : "NOVEMBRO / 2026";
+      const medicos = (linhas[3] && linhas[3][1]) ? parseInt(linhas[3][1]) || 45 : 45;
+      const especialidades = (linhas[3] && linhas[3][3]) ? parseInt(linhas[3][3]) || 31 : 31;
+      const pesoMedidaVal = (linhas[4] && linhas[4][3]) ? parseInt(linhas[4][3]) || 150 : 150;
 
-      // Varredura inteligente por texto em toda a planilha
-      linhas.forEach(row => {
-        let textoA = (row[0] || "").toLowerCase();
-        let textoB = (row[1] || "").toLowerCase();
+      // Ambulatório (Linha 9 na planilha -> índice 8)
+      const ambCons = parseInt(linhas[8]?.[1]) || 0;
+      const ambMulti = parseInt(linhas[8]?.[2]) || 0;
+      const ambExam = parseInt(linhas[8]?.[3]) || 0;
+      const ambTotal = parseInt(linhas[8]?.[4]) || (ambCons + ambMulti + ambExam);
 
-        // Grupos principais
-        if (textoA.includes("amulatório") || textoA.includes("ambulatorio")) {
-          dados.amb.cons = parseInt(row[1]) || 0;
-          dados.amb.multi = parseInt(row[2]) || 0;
-          dados.amb.exam = parseInt(row[3]) || 0;
-          dados.amb.total = parseInt(row[4]) || 0;
-        }
-        if (textoA.includes("srtn")) {
-          dados.srtn.cons = parseInt(row[1]) || 0;
-          dados.srtn.multi = parseInt(row[2]) || 0;
-          dados.srtn.exam = parseInt(row[3]) || 0;
-          dados.srtn.total = parseInt(row[4]) || 0;
-        }
-        if (textoA.includes("amviva")) {
-          dados.amviva.cons = parseInt(row[1]) || 0;
-          dados.amviva.multi = parseInt(row[2]) || 0;
-          dados.amviva.exam = parseInt(row[3]) || 0;
-          dados.amviva.total = parseInt(row[4]) || 0;
-        }
+      // SRTN (Linha 10 na planilha -> índice 9)
+      const srtnCons = parseInt(linhas[9]?.[1]) || 0;
+      const srtnMulti = parseInt(linhas[9]?.[2]) || 0;
+      const srtnExam = parseInt(linhas[9]?.[3]) || 0;
+      const srtnTotal = parseInt(linhas[9]?.[4]) || (srtnCons + srtnMulti + srtnExam);
 
-        // Regulação por Grupo (Procurando pelos nomes exatos do seu print)
-        if (textoA.includes("regulado psf (ambulat")) {
-          dados.amb.psf = parseInt(row[2]) || parseInt(row[1]) || 0;
-        }
-        if (textoA.includes("regulado psf (srtn)")) {
-          dados.srtn.psf = parseInt(row[2]) || parseInt(row[1]) || 0;
-        }
-        if (textoA.includes("regulado psf (amviva)")) {
-          dados.amviva.psf = parseInt(row[2]) || parseInt(row[1]) || 0;
-        }
+      // AMVIVA (Linha 11 na planilha -> índice 10)
+      const amvivaCons = parseInt(linhas[10]?.[1]) || 0;
+      const amvivaMulti = parseInt(linhas[10]?.[2]) || 0;
+      const amvivaExam = parseInt(linhas[10]?.[3]) || 0;
+      const amvivaTotal = parseInt(linhas[10]?.[4]) || (amvivaCons + amvivaMulti + amvivaExam);
 
-        if (textoA.includes("encaixe interno (ambulat")) {
-          dados.amb.enc = parseInt(row[3]) || parseInt(row[4]) || 0;
-        }
-        if (textoA.includes("encaixe interno (srtn)")) {
-          dados.srtn.enc = parseInt(row[3]) || parseInt(row[4]) || 0;
-        }
-        if (textoA.includes("encaixe interno (amviva)")) {
-          dados.amviva.enc = parseInt(row[3]) || parseInt(row[4]) || 0;
-        }
+      // Regulação / Origem (Linhas 15, 16, 17 -> índices 14, 15, 16)
+      // Regulado PSF está na Coluna B (índice 1) | Encaixe Interno na Coluna D (índice 3)
+      const ambPsf = parseInt(linhas[14]?.[1]) || 0;
+      const ambEnc = parseInt(linhas[14]?.[3]) || 0;
 
-        // Top 10 Captura Automática
-        if (textoA.startsWith("top ")) {
-          dados.topEspec.push({
-            pos: row[0].toUpperCase(),
-            nome: row[1] || "Especialidade",
-            total: parseInt(row[2]) || 0
+      const srtnPsf = parseInt(linhas[15]?.[1]) || 0;
+      const srtnEnc = parseInt(linhas[15]?.[3]) || 0;
+
+      const amvivaPsf = parseInt(linhas[16]?.[1]) || 0;
+      const amvivaEnc = parseInt(linhas[16]?.[3]) || 0;
+
+      const psfTotal = ambPsf + srtnPsf + amvivaPsf;
+      const encTotal = ambEnc + srtnEnc + amvivaEnc;
+
+      // Captura do TOP 10 de Especialidades (Linhas 22 a 31 da planilha -> índices 21 a 30)
+      // Coluna A: Posição (ex: TOP 1) | Coluna B: Especialidade | Coluna C: Total
+      let topEspec = [];
+      for (let i = 21; i <= 30; i++) {
+        if (linhas[i] && (linhas[i][0] || linhas[i][1])) {
+          topEspec.push({
+            pos: linhas[i][0] || `TOP ${i - 20}`,
+            nome: linhas[i][1] || "Especialidade",
+            total: parseInt(linhas[i][2]) || 0
           });
         }
-      });
-
-      // Fallback caso o Top 10 venha vazio por algum atraso de sincronização do link público
-      if (dados.topEspec.length === 0) {
-        dados.topEspec = [
-          {pos: "TOP 1", nome: "ORTOPEDIA", total: 471},
-          {pos: "TOP 2", nome: "Cirurgia Pediatrica", total: 406},
-          {pos: "TOP 3", nome: "Endocrinologia", total: 386},
-          {pos: "TOP 4", nome: "Cardiologia", total: 367},
-          {pos: "TOP 5", nome: "Gastroenterologia", total: 284},
-          {pos: "TOP 6", nome: "Neurologia", total: 253},
-          {pos: "TOP 7", nome: "Psiquiatria", total: 241},
-          {pos: "TOP 8", nome: "Alergologia", total: 192},
-          {pos: "TOP 9", nome: "Hematologia", total: 152},
-          {pos: "TOP 10", nome: "Nefrologia", total: 131}
-        ];
       }
 
-      const psfTotal = dados.amb.psf + dados.srtn.psf + dados.amviva.psf;
-      const encTotal = dados.amb.enc + dados.srtn.enc + dados.amviva.enc;
-
-      aplicarDadosNaTela({ ...dados, psfTotal, encTotal });
+      aplicarDadosNaTela({
+        periodo, medicos, especialidades, pesoMedida: pesoMedidaVal,
+        amb: { cons: ambCons, multi: ambMulti, exam: ambExam, total: ambTotal, psf: ambPsf, enc: ambEnc },
+        srtn: { cons: srtnCons, multi: srtnMulti, exam: srtnExam, total: srtnTotal, psf: srtnPsf, enc: srtnEnc },
+        amviva: { cons: amvivaCons, multi: amvivaMulti, exam: amvivaExam, total: amvivaTotal, psf: amvivaPsf, enc: amvivaEnc },
+        psfTotal, encTotal,
+        topEspec
+      });
     }
 
     function parseCSV(text) {
@@ -505,7 +476,7 @@
       document.getElementById('amviva-psf').innerText = d.amviva.psf;
       document.getElementById('amviva-enc').innerText = d.amviva.enc;
 
-      // Popular Top 10
+      // Renderiza a lista de Top 10 Especialidades
       const listaEl = document.getElementById('top-especialidades-lista');
       listaEl.innerHTML = '';
       d.topEspec.forEach(item => {
