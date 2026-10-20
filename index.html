@@ -135,7 +135,7 @@
               <h2 class="font-bold text-lg text-emerald-900 flex items-center gap-2">
                 <i class="fa-solid fa-hospital text-emerald-600"></i> Ambulatório
               </h2>
-              <span id="badge-amb" class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full">0 Atend.</span>
+              <span id="badge-amb" class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-full">0 Atendimentos</span>
             </div>
             
             <div class="space-y-3 my-4">
@@ -148,7 +148,7 @@
               </div>
 
               <div class="flex justify-between items-center text-sm">
-                <span class="text-slate-600 flex items-center gap-2"><i class="fa-solid fa-users-gear text-teal-600 w-4"></i> Atend. Multiprofissional</span>
+                <span class="text-slate-600 flex items-center gap-2"><i class="fa-solid fa-users-gear text-teal-600 w-4"></i> Atendimento Multiprofissional</span>
                 <span id="amb-multi" class="font-bold text-slate-800">0</span>
               </div>
               <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
@@ -177,7 +177,7 @@
               <h2 class="font-bold text-lg text-purple-900 flex items-center gap-2">
                 <i class="fa-solid fa-baby text-purple-600"></i> SRTN
               </h2>
-              <span id="badge-srtn" class="bg-purple-100 text-purple-800 text-xs font-bold px-2.5 py-1 rounded-full">0 Atend.</span>
+              <span id="badge-srtn" class="bg-purple-100 text-purple-800 text-xs font-bold px-2.5 py-1 rounded-full">0 Atendimento</span>
             </div>
             
             <div class="space-y-3 my-4">
@@ -190,7 +190,7 @@
               </div>
 
               <div class="flex justify-between items-center text-sm">
-                <span class="text-slate-600 flex items-center gap-2"><i class="fa-solid fa-users-gear text-fuchsia-600 w-4"></i> Atend. Multiprofissional</span>
+                <span class="text-slate-600 flex items-center gap-2"><i class="fa-solid fa-users-gear text-fuchsia-600 w-4"></i> Atendimento Multiprofissional</span>
                 <span id="srtn-multi" class="font-bold text-slate-800">0</span>
               </div>
               <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
@@ -219,7 +219,7 @@
               <h2 class="font-bold text-lg text-orange-900 flex items-center gap-2">
                 <i class="fa-solid fa-notes-medical text-orange-600"></i> AMVIVA
               </h2>
-              <span id="badge-amviva" class="bg-orange-100 text-orange-800 text-xs font-bold px-2.5 py-1 rounded-full">0 Atend.</span>
+              <span id="badge-amviva" class="bg-orange-100 text-orange-800 text-xs font-bold px-2.5 py-1 rounded-full">0 Atendimentos</span>
             </div>
             
             <div class="space-y-3 my-4">
@@ -232,7 +232,7 @@
               </div>
 
               <div class="flex justify-between items-center text-sm">
-                <span class="text-slate-600 flex items-center gap-2"><i class="fa-solid fa-users-gear text-amber-600 w-4"></i> Atend. Multiprofissional</span>
+                <span class="text-slate-600 flex items-center gap-2"><i class="fa-solid fa-users-gear text-amber-600 w-4"></i> Atendimento Multiprofissional</span>
                 <span id="amviva-multi" class="font-bold text-slate-800">0</span>
               </div>
               <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
@@ -444,7 +444,7 @@
       document.getElementById('kpi-taxa-encaixe').innerText = `${taxaEnc}%`;
 
       // Ambulatório
-      document.getElementById('badge-amb').innerText = `${d.amb.total.toLocaleString('pt-BR')} Atend.`;
+      document.getElementById('badge-amb').innerText = `${d.amb.total.toLocaleString('pt-BR')} Atendimentos`;
       document.getElementById('amb-cons').innerText = d.amb.cons.toLocaleString('pt-BR');
       document.getElementById('bar-amb-cons').style.width = `${Math.min(100, Math.round((d.amb.cons / (d.amb.total || 1)) * 100))}%`;
       document.getElementById('amb-multi').innerText = d.amb.multi.toLocaleString('pt-BR');
@@ -455,7 +455,7 @@
       document.getElementById('amb-enc').innerText = d.amb.enc;
 
       // SRTN
-      document.getElementById('badge-srtn').innerText = `${d.srtn.total.toLocaleString('pt-BR')} Atend.`;
+      document.getElementById('badge-srtn').innerText = `${d.srtn.total.toLocaleString('pt-BR')} Atendimentos`;
       document.getElementById('srtn-cons').innerText = d.srtn.cons.toLocaleString('pt-BR');
       document.getElementById('bar-srtn-cons').style.width = `${Math.min(100, Math.round((d.srtn.cons / (d.srtn.total || 1)) * 100))}%`;
       document.getElementById('srtn-multi').innerText = d.srtn.multi.toLocaleString('pt-BR');
@@ -466,7 +466,7 @@
       document.getElementById('srtn-enc').innerText = d.srtn.enc;
 
       // AMVIVA
-      document.getElementById('badge-amviva').innerText = `${d.amviva.total.toLocaleString('pt-BR')} Atend.`;
+      document.getElementById('badge-amviva').innerText = `${d.amviva.total.toLocaleString('pt-BR')} Atendimentos`;
       document.getElementById('amviva-cons').innerText = d.amviva.cons.toLocaleString('pt-BR');
       document.getElementById('bar-amviva-cons').style.width = `${Math.min(100, Math.round((d.amviva.cons / (d.amviva.total || 1)) * 100))}%`;
       document.getElementById('amviva-multi').innerText = d.amviva.multi.toLocaleString('pt-BR');
