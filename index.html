@@ -165,8 +165,8 @@
             </div>
           </div>
           <div class="pt-3 border-t text-xs text-slate-500 flex justify-between">
-            <span>Regulado PSF: <b id="amb-psf">200</b></span>
-            <span>Encaixe: <b id="amb-enc">800</b></span>
+            <span>Regulado PSF: <b id="amb-psf">0</b></span>
+            <span>Encaixe: <b id="amb-enc">0</b></span>
           </div>
         </div>
 
@@ -207,8 +207,8 @@
             </div>
           </div>
           <div class="pt-3 border-t text-xs text-slate-500 flex justify-between">
-            <span>Regulado PSF: <b id="srtn-psf">30</b></span>
-            <span>Encaixe: <b id="srtn-enc">120</b></span>
+            <span>Regulado PSF: <b id="srtn-psf">0</b></span>
+            <span>Encaixe: <b id="srtn-enc">0</b></span>
           </div>
         </div>
 
@@ -249,8 +249,8 @@
             </div>
           </div>
           <div class="pt-3 border-t text-xs text-slate-500 flex justify-between">
-            <span>Regulado PSF: <b id="amviva-psf">20</b></span>
-            <span>Encaixe: <b id="amviva-enc">80</b></span>
+            <span>Regulado PSF: <b id="amviva-psf">0</b></span>
+            <span>Encaixe: <b id="amviva-enc">0</b></span>
           </div>
         </div>
 
@@ -350,25 +350,7 @@
             .then(res => res.text())
             .then(csvText => processarDados(csvText))
             .catch(() => {
-              aplicarDadosNaTela({
-                periodo: "novembro/2026", medicos: 45, especialidades: 31, pesoMedida: 150,
-                amb: { cons: 1250, multi: 135, exam: 335, total: 1720, psf: 30, enc: 280 },
-                srtn: { cons: 85, multi: 92, exam: 15, total: 192, psf: 30, enc: 280 },
-                amviva: { cons: 123, multi: 45, exam: 0, total: 168, psf: 20, enc: 267 },
-                psfTotal: 80, encTotal: 827,
-                topEspec: [
-                  {pos: "TOP 1", nome: "Ortopedia", total: 471},
-                  {pos: "TOP 2", nome: "Cirurgia Pediátrica", total: 406},
-                  {pos: "TOP 3", nome: "Endocrinologia", total: 386},
-                  {pos: "TOP 4", nome: "Cardiologia", total: 367},
-                  {pos: "TOP 5", nome: "Gastroenterologia", total: 284},
-                  {pos: "TOP 6", nome: "Neurologia", total: 253},
-                  {pos: "TOP 7", nome: "Psiquiatria", total: 241},
-                  {pos: "TOP 8", nome: "Alergologia", total: 192},
-                  {pos: "TOP 9", nome: "Hematologia", total: 152},
-                  {pos: "TOP 10", nome: "Nefrologia", total: 131}
-                ]
-              });
+              console.error("Erro ao carregar os dados.");
             });
         });
     }
@@ -380,62 +362,47 @@
       const especialidades = (linhas[3] && linhas[3][3]) ? parseInt(linhas[3][3]) || 31 : 31;
       const pesoMedidaVal = (linhas[4] && linhas[4][3]) ? parseInt(linhas[4][3]) || 150 : 150;
 
-      // Ambulatório
-      const ambCons = (linhas[8] && linhas[8][1]) ? parseInt(linhas[8][1]) || 0 : 1250;
-      const ambMulti = (linhas[8] && linhas[8][2]) ? parseInt(linhas[8][2]) || 0 : 135;
-      const ambExam = (linhas[8] && linhas[8][3]) ? parseInt(linhas[8][3]) || 0 : 335;
-      const ambTotal = (linhas[8] && linhas[8][4]) ? parseInt(linhas[8][4]) || 1720 : 1720;
+      // Ambulatório (Linha 9 - Índice 8)
+      const ambCons = (linhas[8] && linhas[8][1]) ? parseInt(linhas[8][1]) || 0 : 0;
+      const ambMulti = (linhas[8] && linhas[8][2]) ? parseInt(linhas[8][2]) || 0 : 0;
+      const ambExam = (linhas[8] && linhas[8][3]) ? parseInt(linhas[8][3]) || 0 : 0;
+      const ambTotal = (linhas[8] && linhas[8][4]) ? parseInt(linhas[8][4]) || 0 : 0;
 
-      // SRTN
-      const srtnCons = (linhas[9] && linhas[9][1]) ? parseInt(linhas[9][1]) || 0 : 85;
-      const srtnMulti = (linhas[9] && linhas[9][2]) ? parseInt(linhas[9][2]) || 0 : 92;
-      const srtnExam = (linhas[9] && linhas[9][3]) ? parseInt(linhas[9][3]) || 0 : 15;
-      const srtnTotal = (linhas[9] && linhas[9][4]) ? parseInt(linhas[9][4]) || 192 : 192;
+      // SRTN (Linha 10 - Índice 9)
+      const srtnCons = (linhas[9] && linhas[9][1]) ? parseInt(linhas[9][1]) || 0 : 0;
+      const srtnMulti = (linhas[9] && linhas[9][2]) ? parseInt(linhas[9][2]) || 0 : 0;
+      const srtnExam = (linhas[9] && linhas[9][3]) ? parseInt(linhas[9][3]) || 0 : 0;
+      const srtnTotal = (linhas[9] && linhas[9][4]) ? parseInt(linhas[9][4]) || 0 : 0;
 
-      // AMVIVA
-      const amvivaCons = (linhas[10] && linhas[10][1]) ? parseInt(linhas[10][1]) || 0 : 123;
-      const amvivaMulti = (linhas[10] && linhas[10][2]) ? parseInt(linhas[10][2]) || 0 : 45;
+      // AMVIVA (Linha 11 - Índice 10)
+      const amvivaCons = (linhas[10] && linhas[10][1]) ? parseInt(linhas[10][1]) || 0 : 0;
+      const amvivaMulti = (linhas[10] && linhas[10][2]) ? parseInt(linhas[10][2]) || 0 : 0;
       const amvivaExam = (linhas[10] && linhas[10][3]) ? parseInt(linhas[10][3]) || 0 : 0;
-      const amvivaTotal = (linhas[10] && linhas[10][4]) ? parseInt(linhas[10][4]) || 168 : 168;
+      const amvivaTotal = (linhas[10] && linhas[10][4]) ? parseInt(linhas[10][4]) || 0 : 0;
 
-      // Regulação por Grupo (Corrigida a leitura exata das colunas da planilha)
-      const ambPsf = (linhas[14] && linhas[14][1]) ? parseInt(linhas[14][1]) || 30 : 30;
-      const ambEnc = (linhas[14] && linhas[14][3]) ? parseInt(linhas[14][3]) || 280 : 280;
+      // Regulação por Grupo (Lendo individualmente e com segurança das linhas 15, 16 e 17 / Índices 14, 15 e 16)
+      const ambPsf = (linhas[14] && linhas[14][1]) ? parseInt(linhas[14][1]) || 0 : 0;
+      const ambEnc = (linhas[14] && linhas[14][3]) ? parseInt(linhas[14][3]) || 0 : 0;
 
-      const srtnPsf = (linhas[15] && linhas[15][1]) ? parseInt(linhas[15][1]) || 30 : 30;
-      const srtnEnc = (linhas[15] && linhas[15][3]) ? parseInt(linhas[15][3]) || 280 : 280;
+      const srtnPsf = (linhas[15] && linhas[15][1]) ? parseInt(linhas[15][1]) || 0 : 0;
+      const srtnEnc = (linhas[15] && linhas[15][3]) ? parseInt(linhas[15][3]) || 0 : 0;
 
-      const amvivaPsf = (linhas[16] && linhas[16][1]) ? parseInt(linhas[16][1]) || 20 : 20;
-      const amvivaEnc = (linhas[16] && linhas[16][3]) ? parseInt(linhas[16][3]) || 267 : 267;
+      const amvivaPsf = (linhas[16] && linhas[16][1]) ? parseInt(linhas[16][1]) || 0 : 0;
+      const amvivaEnc = (linhas[16] && linhas[16][3]) ? parseInt(linhas[16][3]) || 0 : 0;
 
       const psfTotal = ambPsf + srtnPsf + amvivaPsf;
       const encTotal = ambEnc + srtnEnc + amvivaEnc;
 
-      // Leitura do Top 10 de Especialidades (Linhas 22 a 31 / índices 21 a 30)
+      // Leitura correta do Top 10 de Especialidades (Linhas 22 a 31 / Índices 21 a 30)
       let topEspec = [];
       for (let i = 21; i <= 30; i++) {
-        if (linhas[i] && linhas[i][0]) {
+        if (linhas[i] && (linhas[i][0] || linhas[i][1])) {
           topEspec.push({
-            pos: linhas[i][0],
+            pos: linhas[i][0] || `TOP ${i - 20}`,
             nome: linhas[i][1] || "Especialidade",
             total: parseInt(linhas[i][2]) || 0
           });
         }
-      }
-
-      if (topEspec.length === 0) {
-        topEspec = [
-          {pos: "TOP 1", nome: "Ortopedia", total: 471},
-          {pos: "TOP 2", nome: "Cirurgia Pediátrica", total: 406},
-          {pos: "TOP 3", nome: "Endocrinologia", total: 386},
-          {pos: "TOP 4", nome: "Cardiologia", total: 367},
-          {pos: "TOP 5", nome: "Gastroenterologia", total: 284},
-          {pos: "TOP 6", nome: "Neurologia", total: 253},
-          {pos: "TOP 7", nome: "Psiquiatria", total: 241},
-          {pos: "TOP 8", nome: "Alergologia", total: 192},
-          {pos: "TOP 9", nome: "Hematologia", total: 152},
-          {pos: "TOP 10", nome: "Nefrologia", total: 131}
-        ];
       }
 
       aplicarDadosNaTela({
@@ -517,9 +484,9 @@
       listaEl.innerHTML = '';
       d.topEspec.forEach(item => {
         let badgeColor = "bg-slate-100 text-slate-700";
-        if(item.pos === "TOP 1") badgeColor = "bg-amber-100 text-amber-800 font-bold";
-        else if(item.pos === "TOP 2") badgeColor = "bg-slate-200 text-slate-800 font-bold";
-        else if(item.pos === "TOP 3") badgeColor = "bg-orange-100 text-orange-800 font-bold";
+        if(item.pos.includes("1")) badgeColor = "bg-amber-100 text-amber-800 font-bold";
+        else if(item.pos.includes("2")) badgeColor = "bg-slate-200 text-slate-800 font-bold";
+        else if(item.pos.includes("3")) badgeColor = "bg-orange-100 text-orange-800 font-bold";
 
         const row = document.createElement('div');
         row.className = "flex justify-between items-center py-1 border-b border-slate-100 last:border-none";
