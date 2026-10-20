@@ -279,7 +279,7 @@
           </div>
         </div>
 
-        <!-- NOVO: Top 10 de Especialidades (Ocupa 1 coluna ao lado) -->
+        <!-- Top 10 de Especialidades (Ocupa 1 coluna) -->
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
           <div>
             <h3 class="font-bold text-slate-700 mb-3 flex items-center gap-2 text-sm uppercase tracking-wide border-b pb-2">
@@ -350,13 +350,12 @@
             .then(res => res.text())
             .then(csvText => processarDados(csvText))
             .catch(() => {
-              // Dados de fallback caso ocorra falha de rede
               aplicarDadosNaTela({
                 periodo: "novembro/2026", medicos: 45, especialidades: 31, pesoMedida: 150,
-                amb: { cons: 1250, multi: 135, exam: 335, total: 1720, psf: 200, enc: 800 },
-                srtn: { cons: 85, multi: 92, exam: 15, total: 192, psf: 30, enc: 120 },
-                amviva: { cons: 123, multi: 45, exam: 0, total: 168, psf: 20, enc: 80 },
-                psfTotal: 250, encTotal: 1000,
+                amb: { cons: 1250, multi: 135, exam: 335, total: 1720, psf: 30, enc: 280 },
+                srtn: { cons: 85, multi: 92, exam: 15, total: 192, psf: 30, enc: 280 },
+                amviva: { cons: 123, multi: 45, exam: 0, total: 168, psf: 20, enc: 267 },
+                psfTotal: 80, encTotal: 827,
                 topEspec: [
                   {pos: "TOP 1", nome: "Ortopedia", total: 471},
                   {pos: "TOP 2", nome: "Cirurgia Pediátrica", total: 406},
@@ -399,15 +398,15 @@
       const amvivaExam = (linhas[10] && linhas[10][3]) ? parseInt(linhas[10][3]) || 0 : 0;
       const amvivaTotal = (linhas[10] && linhas[10][4]) ? parseInt(linhas[10][4]) || 168 : 168;
 
-      // Regulação por Grupo
-      const ambPsf = (linhas[14] && linhas[14][1]) ? parseInt(linhas[14][1]) || 200 : 200;
-      const ambEnc = (linhas[14] && linhas[14][3]) ? parseInt(linhas[14][3]) || 800 : 800;
+      // Regulação por Grupo (Corrigida a leitura exata das colunas da planilha)
+      const ambPsf = (linhas[14] && linhas[14][1]) ? parseInt(linhas[14][1]) || 30 : 30;
+      const ambEnc = (linhas[14] && linhas[14][3]) ? parseInt(linhas[14][3]) || 280 : 280;
 
       const srtnPsf = (linhas[15] && linhas[15][1]) ? parseInt(linhas[15][1]) || 30 : 30;
-      const srtnEnc = (linhas[15] && linhas[15][3]) ? parseInt(linhas[15][3]) || 120 : 120;
+      const srtnEnc = (linhas[15] && linhas[15][3]) ? parseInt(linhas[15][3]) || 280 : 280;
 
       const amvivaPsf = (linhas[16] && linhas[16][1]) ? parseInt(linhas[16][1]) || 20 : 20;
-      const amvivaEnc = (linhas[16] && linhas[16][3]) ? parseInt(linhas[16][3]) || 80 : 80;
+      const amvivaEnc = (linhas[16] && linhas[16][3]) ? parseInt(linhas[16][3]) || 267 : 267;
 
       const psfTotal = ambPsf + srtnPsf + amvivaPsf;
       const encTotal = ambEnc + srtnEnc + amvivaEnc;
@@ -424,7 +423,6 @@
         }
       }
 
-      // Fallback caso a planilha ainda não tenha os dados nas linhas 22 a 31
       if (topEspec.length === 0) {
         topEspec = [
           {pos: "TOP 1", nome: "Ortopedia", total: 471},
