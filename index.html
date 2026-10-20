@@ -44,7 +44,7 @@
     <header class="header-bg text-white p-4 md:p-6">
       <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
         
-        <!-- Logotipo Destacado e Textos Brancos -->
+        <!-- Logotipo Destacado e Textos 100% Brancos -->
         <div class="flex items-center gap-4">
           <div class="bg-white p-2.5 rounded-xl shadow-lg border border-white/20 flex items-center justify-center shrink-0">
             <img src="LOGO-CPAM-2025.png" 
@@ -86,42 +86,36 @@
         </div>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-3">
           
-          <!-- Total de Atendimentos -->
           <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 shadow-sm text-center">
             <i class="fa-solid fa-hospital-user text-emerald-600 text-xl mb-1"></i>
             <p id="kpi-total" class="text-2xl font-extrabold text-slate-800">2.230</p>
             <p class="text-[11px] font-semibold text-slate-500 uppercase mt-1">Total Atendimentos</p>
           </div>
 
-          <!-- Profissionais Ativos -->
           <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 shadow-sm text-center">
             <i class="fa-solid fa-user-doctor text-blue-600 text-xl mb-1"></i>
             <p id="kpi-medicos" class="text-2xl font-extrabold text-slate-800">45</p>
             <p class="text-[11px] font-semibold text-slate-500 uppercase mt-1">Profissionais Ativos</p>
           </div>
 
-          <!-- Especialidades -->
           <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 shadow-sm text-center">
             <i class="fa-solid fa-stethoscope text-purple-600 text-xl mb-1"></i>
             <p id="kpi-especialidades" class="text-2xl font-extrabold text-slate-800">31</p>
             <p class="text-[11px] font-semibold text-slate-500 uppercase mt-1">Especialidades</p>
           </div>
 
-          <!-- Peso e Medida -->
           <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 shadow-sm text-center">
             <i class="fa-solid fa-weight-scale text-teal-600 text-xl mb-1"></i>
             <p id="kpi-peso-medida" class="text-2xl font-extrabold text-slate-800">150</p>
             <p class="text-[11px] font-semibold text-slate-500 uppercase mt-1">Peso e Medida</p>
           </div>
 
-          <!-- Regulados (PSF) -->
           <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 shadow-sm text-center">
             <i class="fa-solid fa-network-wired text-amber-600 text-xl mb-1"></i>
             <p id="kpi-taxa-psf" class="text-2xl font-extrabold text-slate-800">20%</p>
             <p class="text-[11px] font-semibold text-slate-500 uppercase mt-1">Regulados (PSF)</p>
           </div>
 
-          <!-- Encaixe Interno -->
           <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 shadow-sm text-center">
             <i class="fa-solid fa-user-plus text-rose-600 text-xl mb-1"></i>
             <p id="kpi-taxa-encaixe" class="text-2xl font-extrabold text-slate-800">80%</p>
@@ -262,10 +256,10 @@
 
       </div>
 
-      <!-- GRÁFICOS VISUAIS DE APOIO -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- SEÇÃO INFERIOR: GRÁFICOS + TOP 10 DE ESPECIALIDADES -->
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
         
-        <!-- Gráfico de Distribuição por Subgrupos -->
+        <!-- Gráfico de Distribuição por Subgrupos (Ocupa 2 colunas) -->
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm lg:col-span-2">
           <h3 class="font-bold text-slate-700 mb-4 flex items-center gap-2 text-sm uppercase tracking-wide">
             <i class="fa-solid fa-chart-column text-emerald-600"></i> Distribuição Operacional por Subgrupo
@@ -275,13 +269,28 @@
           </div>
         </div>
 
-        <!-- Gráfico de Origem do Atendimento -->
+        <!-- Gráfico de Origem do Atendimento (Ocupa 1 coluna) -->
         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
           <h3 class="font-bold text-slate-700 mb-4 flex items-center gap-2 text-sm uppercase tracking-wide">
             <i class="fa-solid fa-chart-pie text-emerald-600"></i> Perfil de Origem (Regulação)
           </h3>
           <div class="h-64 flex items-center justify-center">
             <canvas id="originChart"></canvas>
+          </div>
+        </div>
+
+        <!-- NOVO: Top 10 de Especialidades (Ocupa 1 coluna ao lado) -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-slate-700 mb-3 flex items-center gap-2 text-sm uppercase tracking-wide border-b pb-2">
+              <i class="fa-solid fa-medal text-amber-500"></i> Top 10 Especialidades
+            </h3>
+            <div id="top-especialidades-lista" class="space-y-1.5 text-xs">
+              <!-- Preenchido automaticamente pelo JavaScript -->
+            </div>
+          </div>
+          <div class="pt-3 border-t text-[10px] text-slate-400 text-center">
+            Ranking atualizado conforme produção mensal
           </div>
         </div>
 
@@ -341,12 +350,25 @@
             .then(res => res.text())
             .then(csvText => processarDados(csvText))
             .catch(() => {
+              // Dados de fallback caso ocorra falha de rede
               aplicarDadosNaTela({
                 periodo: "novembro/2026", medicos: 45, especialidades: 31, pesoMedida: 150,
                 amb: { cons: 1250, multi: 135, exam: 335, total: 1720, psf: 200, enc: 800 },
                 srtn: { cons: 85, multi: 92, exam: 15, total: 192, psf: 30, enc: 120 },
                 amviva: { cons: 123, multi: 45, exam: 0, total: 168, psf: 20, enc: 80 },
-                psfTotal: 250, encTotal: 1000
+                psfTotal: 250, encTotal: 1000,
+                topEspec: [
+                  {pos: "TOP 1", nome: "Ortopedia", total: 471},
+                  {pos: "TOP 2", nome: "Cirurgia Pediátrica", total: 406},
+                  {pos: "TOP 3", nome: "Endocrinologia", total: 386},
+                  {pos: "TOP 4", nome: "Cardiologia", total: 367},
+                  {pos: "TOP 5", nome: "Gastroenterologia", total: 284},
+                  {pos: "TOP 6", nome: "Neurologia", total: 253},
+                  {pos: "TOP 7", nome: "Psiquiatria", total: 241},
+                  {pos: "TOP 8", nome: "Alergologia", total: 192},
+                  {pos: "TOP 9", nome: "Hematologia", total: 152},
+                  {pos: "TOP 10", nome: "Nefrologia", total: 131}
+                ]
               });
             });
         });
@@ -390,12 +412,41 @@
       const psfTotal = ambPsf + srtnPsf + amvivaPsf;
       const encTotal = ambEnc + srtnEnc + amvivaEnc;
 
+      // Leitura do Top 10 de Especialidades (Linhas 22 a 31 / índices 21 a 30)
+      let topEspec = [];
+      for (let i = 21; i <= 30; i++) {
+        if (linhas[i] && linhas[i][0]) {
+          topEspec.push({
+            pos: linhas[i][0],
+            nome: linhas[i][1] || "Especialidade",
+            total: parseInt(linhas[i][2]) || 0
+          });
+        }
+      }
+
+      // Fallback caso a planilha ainda não tenha os dados nas linhas 22 a 31
+      if (topEspec.length === 0) {
+        topEspec = [
+          {pos: "TOP 1", nome: "Ortopedia", total: 471},
+          {pos: "TOP 2", nome: "Cirurgia Pediátrica", total: 406},
+          {pos: "TOP 3", nome: "Endocrinologia", total: 386},
+          {pos: "TOP 4", nome: "Cardiologia", total: 367},
+          {pos: "TOP 5", nome: "Gastroenterologia", total: 284},
+          {pos: "TOP 6", nome: "Neurologia", total: 253},
+          {pos: "TOP 7", nome: "Psiquiatria", total: 241},
+          {pos: "TOP 8", nome: "Alergologia", total: 192},
+          {pos: "TOP 9", nome: "Hematologia", total: 152},
+          {pos: "TOP 10", nome: "Nefrologia", total: 131}
+        ];
+      }
+
       aplicarDadosNaTela({
         periodo, medicos, especialidades, pesoMedida: pesoMedidaVal,
         amb: { cons: ambCons, multi: ambMulti, exam: ambExam, total: ambTotal, psf: ambPsf, enc: ambEnc },
         srtn: { cons: srtnCons, multi: srtnMulti, exam: srtnExam, total: srtnTotal, psf: srtnPsf, enc: srtnEnc },
         amviva: { cons: amvivaCons, multi: amvivaMulti, exam: amvivaExam, total: amvivaTotal, psf: amvivaPsf, enc: amvivaEnc },
-        psfTotal, encTotal
+        psfTotal, encTotal,
+        topEspec
       });
     }
 
@@ -462,6 +513,27 @@
       document.getElementById('bar-amviva-exam').style.width = `${Math.min(100, Math.round((d.amviva.exam / (d.amviva.total || 1)) * 100))}%`;
       document.getElementById('amviva-psf').innerText = d.amviva.psf;
       document.getElementById('amviva-enc').innerText = d.amviva.enc;
+
+      // Popular a lista do Top 10 de Especialidades
+      const listaEl = document.getElementById('top-especialidades-lista');
+      listaEl.innerHTML = '';
+      d.topEspec.forEach(item => {
+        let badgeColor = "bg-slate-100 text-slate-700";
+        if(item.pos === "TOP 1") badgeColor = "bg-amber-100 text-amber-800 font-bold";
+        else if(item.pos === "TOP 2") badgeColor = "bg-slate-200 text-slate-800 font-bold";
+        else if(item.pos === "TOP 3") badgeColor = "bg-orange-100 text-orange-800 font-bold";
+
+        const row = document.createElement('div');
+        row.className = "flex justify-between items-center py-1 border-b border-slate-100 last:border-none";
+        row.innerHTML = `
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] px-1.5 py-0.5 rounded ${badgeColor}">${item.pos}</span>
+            <span class="text-slate-700 font-medium truncate max-w-[130px]">${item.nome}</span>
+          </div>
+          <span class="font-bold text-emerald-800">${item.total.toLocaleString('pt-BR')}</span>
+        `;
+        listaEl.appendChild(row);
+      });
 
       renderizarGraficos(
         [d.amb.cons, d.srtn.cons, d.amviva.cons],
